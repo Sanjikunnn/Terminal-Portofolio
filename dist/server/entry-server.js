@@ -140,9 +140,9 @@ function App() {
       help: [
         "Available commands:\n",
         "- help: Show this help message\n",
-        "- about: Show about me info\n",
-        "- projects: List my projects\n",
-        "- clear: Clear the terminal\n\n"
+        "- aboutt: Show about me info\n",
+        "- projectss: List my projects\n",
+        "- clearr: Clear the terminal\n\n"
       ],
       about: [
         "Hi, I'm Faizal Muhamad Iqbal 👋\n\n",
