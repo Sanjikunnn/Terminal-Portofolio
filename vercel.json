@@ -1,7 +1,6 @@
 {
-    "version": 2,
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/src/App.tsx" }
-    ]
-  }
-  
+  "version": 2,
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
