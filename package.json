@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "vite"
+    "start": "vite --host"
   },
   "dependencies": {
     "compression": "^1.8.0",
