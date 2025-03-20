@@ -1,7 +1,7 @@
 import './index.css'
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
-import App from './src/App.tsx'
+import App from './App'
 import { startTransition } from 'react';
 
 const rootElement = document.getElementById('root');
