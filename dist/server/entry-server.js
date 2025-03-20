@@ -139,7 +139,7 @@ function App() {
     const commands = {
       help: [
         "Available commands:\n",
-        "- help: Show this help message\n",
+        "- helpp: Show this help message\n",
         "- aboutt: Show about me info\n",
         "- projectss: List my projects\n",
         "- clearr: Clear the terminal\n\n"
