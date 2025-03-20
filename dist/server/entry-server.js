@@ -1,6 +1,8 @@
 import { jsx } from "react/jsx-runtime";
 import { useRef, useState, useEffect, StrictMode } from "react";
 import { renderToString } from "react-dom/server";
+import { flushSync } from "react-dom";
+
 function App() {
   const terminalRef = useRef(null);
   const [term, setTerm] = useState(null);
@@ -42,26 +44,35 @@ function App() {
       if (data === "\r") {
         stopCurrentAudio();
         term.writeln("\nProcessing...");
+      
+        flushSync(() => setHistory((prev) => [...prev, command.trim()]));
+        setHistoryIndex(-1);
+      
         setTimeout(() => {
           term.write("\r\x1B[K");
           handleCommand(command.trim(), term);
-          setHistory((prev) => [...prev, command.trim()]);
-          setHistoryIndex(-1);
           command = "";
         }, 500);
+      }
       } else if (data === "" && command.length > 0) {
         stopCurrentAudio();
         playBackspaceSound();
         command = command.slice(0, -1);
         term.write("\b \b");
       } else if (data === "\x1B[A" && history.length > 0) {
-        setHistoryIndex((prev) => prev > 0 ? prev - 1 : history.length - 1);
-        command = history[historyIndex] || "";
-        term.write("\r\x1B[K> " + command);
+        setHistoryIndex((prev) => {
+          const newIndex = prev > 0 ? prev - 1 : history.length - 1;
+          command = history[newIndex] || "";
+          term.write("\r\x1B[K> " + command);
+          return newIndex;
+        });
       } else if (data === "\x1B[B" && history.length > 0) {
-        setHistoryIndex((prev) => prev < history.length - 1 ? prev + 1 : -1);
-        command = history[historyIndex] || "";
-        term.write("\r\x1B[K> " + command);
+        setHistoryIndex((prev) => {
+          const newIndex = prev < history.length - 1 ? prev + 1 : -1;
+          command = newIndex !== -1 ? history[newIndex] : "";
+          term.write("\r\x1B[K> " + command);
+          return newIndex;
+        });
       } else if (isValidInput(data)) {
         stopCurrentAudio();
         playBeep();
